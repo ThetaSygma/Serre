@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<head>
+  <link rel="shortcut icon" href="img/logo.png">
+  <title>Gestion de la serre</title>
+  <meta charset="utf-8" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/jquery.js"></script>
+    <script src="js/socket.io.js"></script> 
+</head>
+<div id="conteneur3">
+<header>
+<hr>
+  <a href="index.html"><h1 class="favorite styled">Gestion de la serre</h1></a>
+  <hr>
+</header>  
+<p style="font-size: 100px;">Bonjouuuuu</p>
+<form style="margin-left: 33%;">
+  <input type="button" value="Je pars" accesskey="s">
+</form>
+<body>
+	<script type="text/javascript"> 
+	var btn = document.querySelector('input');
+var txt = document.querySelector('p');
+
+btn.addEventListener('click', updateBtn);
+
+function updateBtn() {
+  if (btn.value === 'Je viens') {
+    btn.value = 'Je pars';
+    txt.textContent = 'Bonjour';
+  } else {
+    btn.value = 'Je viens';
+    txt.textContent = 'Au revoir';
+  }
+}</script>
+</body>
