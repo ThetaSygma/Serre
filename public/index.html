@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<head>
+	<link rel="shortcut icon" href="img/logo.png">
+	<title>Gestion de la serre</title>
+	<meta charset="utf-8" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/jquery.js"></script>
+    <script src="js/socket.io.js"></script> 
+</head>
+<div id="conteneur3">
+<header>
+<hr>
+	<a href="index.html"><h1>Gestion de la serre</h1></a>
+	<hr>
+</header>
+
+<body>
+
+<div id="conteneur_general">
+<!--MENU-->
+    <div id="menu">
+    	<article class="favorite styled" style="width: auto; margin-left: 50px; background-color: #23272A; border-color: #23272A; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px">
+    	<article style="height: auto; width: auto; margin: 0px; border-color: #23272A; border-bottom-right-radius: 0px; margin-bottom: 4px; border-bottom-left-radius: 0px"><a href="index.html"><h1>Menu</h1> </article>
+    	<hr>
+    	<article style="height: auto; width: auto; margin: 0px; border-color: #23272A; border-radius: 0px; margin-bottom: 4px; border-bottom-left-radius: 0px"></article>
+		<a href="presentation.html"><article class="favorite styled" type="submit" style="cursor: pointer; height: auto; width: auto; margin: 0px; border-color: #23272A; border-radius: 0px; margin-bottom: 4px;"><p>Présentation projet</p> </article></a>
+<a href="Equipe.html"><article class="favorite styled" type="submit" style="cursor: pointer; height: auto; width: auto; margin-left: 0px; margin-right: 0px; margin-bottom: 4px; margin-top: 4px; border-color: #23272A; border-radius: 0px"><p>L'équipe</p> </article></a>
+<a href="Orga.html"><article class="favorite styled" type="submit" style="cursor: pointer; height: auto; width: auto; margin-left: 0px; margin-right: 0px; margin-bottom: 4px; margin-top: 4px; border-color: #23272A; border-radius: 0px"><p>Organisation</p> </article></a>
+<a href="foufou.html"><article class="favorite styled" type="submit" style="cursor: pointer; height: auto; width: auto; margin-left: 0px; margin-right: 0px; margin-bottom: 4px; margin-top: 4px; border-color: #23272A; border-radius: 0px"><p>On est des petits foufou</p> </article></a>
+<hr>
+    </article>
+	</div>
+
+	<div id="conteneur">
+	<article style="border-color: #987227; height: 17rem;">
+	<br><br>
+		<h1> Hygrométrie Sol</h1>
+		<p>Actuellement <span id=varHygroSol></span>%</p>
+		<div id="conteneur_general">
+			<input class="favorite styled" type="submit" name="-Sol" id=SolMoins value="-" style="border-color: #987227"></input>
+			<p style="padding-left: 20%"><span id=hygroSolCons></span>%</p>
+			<input class="favorite styled" type="submit" name="+Sol" id=SolPlus value="+" style="border-color: #987227"></input>
+		</div>
+		<br>
+		<input class="favorite styled" type="submit" name="-Sol" id=ValidSol value="Valider" style="border-color: #987227; width:auto; margin-left:43%;"></input>
+	</article>
+
+	<article style="border-color: #FE6401; height: 17rem;">
+	<br><br>
+		<h1>Température</h1>
+		<p>Actuellement <span id=varTemp></span>°C</p>
+		<div id="conteneur_general">
+			<input class="favorite styled" class="bouton" type="submit" id=TempMoins name="-Temp" value="-" style="border-color: #FE6401"></input>
+			<p style="padding-left: 20%"><span id=tempCons></span>°C</p>
+			<input class="favorite styled" type="submit" name="+Temp" id=TempPlus value="+" style="border-color: #FE6401"></input>
+		</div>
+		<br>
+		<input class="favorite styled" type="submit" name="-Sol" id=ValidTemp value="Valider" style="border-color: #FE6401; width:auto; margin-left:43%;"></input>
+	</article>
+
+
+
+	</div>
+
+.....
+	<div id="conteneur2">
+	<article style="border-color: #61ADED; height: 17rem;">
+	<br><br>
+		<h1>Hygrométrie Air</h1>
+		<p>Actuellement <span id=varHygroAir></span>%</p>
+		<div id="conteneur_general">
+			<input class="favorite styled" type="submit" name="-Air" id=AirMoins value="-" style="border-color: #61ADED"></input>
+			<p style="padding-left: 20%"><span id=hygroAirCons></span>%</p>
+			<input class="favorite styled" type="submit" name="+Air" id=AirPlus value="+" style="border-color: #61ADED"></input>
+		</div>
+		<br>
+		<input class="favorite styled" type="submit" name="-Sol" id=ValidAir value="Valider" style="border-color: #61ADED; width:auto; margin-left:43%;"></input>
+	</article>
+	<article style="border-color: #01FE75; height: 17rem;">
+	<br><br>
+		<h1>Luminosité</h1>
+		<p>Actuellement <span id=varLum></span> Lux</p>
+		<div id="conteneur_general">
+			<input class="favorite styled" type="submit" name="-Lum" id=LumMoins value="-" style="border-color: #01FE75"></input>
+			<p style="padding-left: 20%"><span id=lumCons></span> Lux</p>
+			<input class="favorite styled" type="submit" name="+Lum" id=LumPlus value="+" style="border-color: #01FE75"></input>
+		</div>
+		<br>
+		<input class="favorite styled" type="submit" name="-Sol" id=ValidLum value="Valider" style="border-color: #01FE75; width:auto; margin-left:43%;"></input>
+	</article>
+	</div>
+</div>
+</div>
+
+<script>
+
+            var socket = io.connect('http://rasp6:80');
+            console.log("yousk2");
+		socket.on('temp',function(message){
+		$('#varTemp').text(message);});
+		
+		socket.on('hygroAir',function(message){
+		$('#varHygroAir').text(message);});
+		
+		socket.on('hygroSol',function(message){
+		$('#varHygroSol').text(message);});
+		
+		socket.on('lum',function(message){
+		$('#varLum').text(message);});
+		
+		socket.on('temp_cons',function(message){
+		$('#tempCons').text(message);});
+		
+		socket.on('hygroAir_cons',function(message){
+		$('#hygroAirCons').text(message);});
+		
+		socket.on('hygroSol_cons',function(message){
+		$('#hygroSolCons').text(message);});
+		
+		socket.on('lum_cons',function(message){
+		$('#lumCons').text(message);});
+		
+		$('#SolMoins').click(function () {
+                     socket.emit('hygroSolConsDecrement',-1);})
+		     
+		$('#SolPlus').click(function () {
+                     socket.emit('hygroSolConsIncrement',1);});
+                     
+		$('#AirMoins').click(function () {
+                     socket.emit('hygroAirConsDecrement',-1);})
+		     
+		$('#AirPlus').click(function () {
+                     socket.emit('hygroAirConsIncrement',1);});
+                     
+		$('#TempMoins').click(function () {
+                     socket.emit('tempConsDecrement',-1);})
+		     
+		$('#TempPlus').click(function () {
+                     socket.emit('tempConsIncrement',1);});
+                     
+		$('#LumMoins').click(function () {
+                     socket.emit('lumConsDecrement',-1);})
+		     
+		$('#LumPlus').click(function () {
+                     socket.emit('lumConsIncrement',1);});
+                     
+        $('#ValidSol').click(function () {
+                     socket.emit('validSol',1);});
+                     
+        $('#ValidAir').click(function () {
+                     socket.emit('validAir',1);});
+                           
+        $('#ValidTemp').click(function () {
+                     socket.emit('validTemp',1);});				 
+		    	
+        $('#ValidLum').click(function () {
+                     socket.emit('validLum',1);});				
+        </script>
+
+</body>
